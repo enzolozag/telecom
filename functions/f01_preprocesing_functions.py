@@ -1,6 +1,5 @@
 # Función para leer información de un dataframe ------------------
 
-
 def df_explore(df):
     print("Información del DataFrame:")
     df.info()
@@ -12,7 +11,7 @@ def df_explore(df):
     print(df.describe(include="all"))
 
 
-def df_error_checking(df,column='customerID'):
+def df_ValuesCheck(df,column='customerID'):
     print('Columnas con valores ausentes:',df.isna().sum())
     print()
     print('Filas totalmente duplicadas:',df.duplicated().sum())
