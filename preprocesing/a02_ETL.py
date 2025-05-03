@@ -113,7 +113,7 @@ print("\nGuardando dataset final con nuevas características...")
 df_encoded.to_feather(f'{project_root}/datasets/dataframe_enriched.feather')
 
 # Opcional: Guardar también una versión CSV
-df_encoded.to_csv(f'{project_root}/datasets/dataframe_enriched.csv', index=False)
+# df_encoded.to_csv(f'{project_root}/datasets/dataframe_enriched.csv', index=False)
 
 print("""
 Proceso completado exitosamente!
