@@ -108,9 +108,9 @@ plt.show()
 # PREPROCESAMIENTO DE LOS DEMÁS DATASETS
 # ====================
 print("\nRevisando valores ausentes y duplicados")
-# df_ValuesCheck(personal)
-# df_ValuesCheck(internet)
-# df_ValuesCheck(phone)
+df_ValuesCheck(personal)
+df_ValuesCheck(internet)
+df_ValuesCheck(phone)
 
 # ====================
 # INTEGRACIÓN DE DATASETS

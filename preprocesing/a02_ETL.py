@@ -105,15 +105,42 @@ print("\nEstadísticas después de normalización:")
 print(df_encoded[numeric_cols].describe().loc[['mean', 'std']])
 
 # ====================
+# CREANDO CONJUNTOS DE ENTRENAMIENTO Y VALIDACIÓN
+# ====================
+
+# Separando características y objetivo
+features = df_encoded.drop('Churn', axis=1)
+target = df_encoded['Churn']
+
+from sklearn.model_selection import train_test_split
+
+# Separando conjunto de entrenamiento y de validación
+features_train, features_valid, target_train, target_valid = train_test_split(
+    features, target, test_size=0.25, random_state=12345
+)
+print(f"Tamaño del conjunto de entrenamiento: {features_train.shape}")
+print(f"Tamaño del conjunto de validación: {features_valid.shape}")
+
+# ====================
 # GUARDADO FINAL
 # ====================
-print("\nGuardando dataset final con nuevas características...")
+print("\nGuardando datasets finales...")
 
-# Guardar versión con nuevas características
-df_encoded.to_feather(f'{project_root}/datasets/dataframe_enriched.feather')
+# Guardar versión final de DF con nuevas características
+df_encoded.to_feather(f'{project_root}/datasets/a02_ETL.feather')
 
-# Opcional: Guardar también una versión CSV
-# df_encoded.to_csv(f'{project_root}/datasets/dataframe_enriched.csv', index=False)
+# Opcional: Guardar una versión CSV
+df_encoded.to_csv(f'{project_root}/datasets/a02_ETL.csv', index=False)
+
+# Guardar características de entrenamiento y validación (DataFrames)
+features_train.to_feather(f'{project_root}/datasets/features_train.feather')
+features_valid.to_feather(f'{project_root}/datasets/features_valid.feather')
+
+# Convertir Series a DataFrames antes de guardar
+target_train.to_frame().to_feather(f'{project_root}/datasets/target_train.feather')
+target_valid.to_frame().to_feather(f'{project_root}/datasets/target_valid.feather')
+
+print("Todos los archivos se guardaron correctamente")
 
 print("""
 Proceso completado exitosamente!
@@ -122,8 +149,8 @@ Dataset guardado con:
 - Análisis de balance de clases
 - Nuevas características de ingeniería
 - Variables numéricas normalizadas
+- División de conjuntos de entrenamiento y validación
 """)
-
 
 # ====================
 # ANÁLISIS ADICIONAL
@@ -149,3 +176,4 @@ plt.figure(figsize=(12, 8))
 sns.barplot(x='Importance', y='Feature', data=feature_importance.head(15))
 plt.title('Importancia de Características (Random Forest)')
 plt.show()
+
